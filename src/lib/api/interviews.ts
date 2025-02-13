@@ -1,78 +1,46 @@
-import { supabase } from '@/lib/supabase';
+import { apiClient } from './client';
 import type { InterviewAnswers } from '@/lib/types/interviews';
 
 export async function submitInterviewAnswers(applicationId: string, answers: Record<string, string>) {
-  const { error } = await supabase
-    .from('interview_answers')
-    .insert([{
-      application_id: applicationId,
-      answers,
-      submitted_at: new Date().toISOString(),
-    }]);
-
-  if (error) throw error;
+  const { data } = await apiClient.post(`/applications/${applicationId}/interview-answers`, {
+    answers,
+    submitted_at: new Date().toISOString(),
+  });
+  return data;
 }
 
 export async function getInterviewQuestions(jobId: string) {
-  const { data, error } = await supabase
-    .from('interview_questions')
-    .select('*')
-    .eq('job_id', jobId);
-
-  if (error) throw error;
+  const { data } = await apiClient.get(`/jobs/${jobId}/interview-questions`);
   return data;
 }
 
 export async function submitAnswer(applicationId: string, questionId: string, answer: string) {
-  const { error } = await supabase
-    .from('interview_answers')
-    .insert([{
-      application_id: applicationId,
-      question_id: questionId,
-      answer,
-      submitted_at: new Date().toISOString(),
-    }]);
-
-  if (error) throw error;
+  const { data } = await apiClient.post(`/applications/${applicationId}/answers`, {
+    question_id: questionId,
+    answer,
+    submitted_at: new Date().toISOString(),
+  });
+  return data;
 }
 
 export async function uploadVideo(applicationId: string, questionId: string, videoFile: File) {
-  const fileName = `${applicationId}/${questionId}-${Date.now()}.mp4`;
+  const formData = new FormData();
+  formData.append('video', videoFile);
   
-  const { error: uploadError } = await supabase
-    .storage
-    .from('interview-videos')
-    .upload(fileName, videoFile);
-
-  if (uploadError) throw uploadError;
-
-  const { data } = await supabase
-    .storage
-    .from('interview-videos')
-    .getPublicUrl(fileName);
-
-  // Save the video URL in the interview_answers table
-  const { error: answerError } = await supabase
-    .from('interview_answers')
-    .insert([{
-      application_id: applicationId,
-      question_id: questionId,
-      video_url: data.publicUrl,
-      submitted_at: new Date().toISOString(),
-    }]);
-
-  if (answerError) throw answerError;
-
-  return data.publicUrl;
+  const { data } = await apiClient.post(
+    `/applications/${applicationId}/questions/${questionId}/video`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+  
+  return data.videoUrl;
 }
 
 export async function getVideoQuestions(jobId: string) {
-  const { data, error } = await supabase
-    .from('interview_questions')
-    .select('*')
-    .eq('job_id', jobId)
-    .eq('type', 'video');
-
-  if (error) throw error;
+  const { data } = await apiClient.get(`/jobs/${jobId}/video-questions`);
   return data || [];
 }
