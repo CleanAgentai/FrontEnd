@@ -2,167 +2,137 @@ import { Check, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
-const tiers = [
-  {
-    name: 'Business Suite',
-    price: 299,
-    description: 'Your complete AI workforce, available 24/7 for 10% of traditional hiring costs',
-    features: [
-      '7 qualified candidates per month',
-      'AI Marketing Agent (replaces Marketing Manager)',
-      'AI Sales Agent (replaces Sales Representative)',
-      'AI Operations Agent (replaces Operations Manager)',
-      'AI Hiring Agent (replaces HR Manager)',
-      '24/7 availability',
-      'Custom workflow automation',
-      'Performance analytics dashboard',
-      'Unlimited team members',
-      'Priority support'
-    ],
-    savings: {
-      traditional: '12,000+',
-      withUs: 299,
-      percentage: 97.5
-    },
-    cta: 'Start 7-Day Free Trial',
-    highlighted: true
-  }
+const planFeatures = [
+  'Full Platform Access',
+  'Up to 7 Qualified Candidates/Month',
+  'AI-Powered Scheduling System',
+  'Route Optimization',
+  'Quality Management Tools',
+  'Customer Portal & Mobile App',
+  'Real-time Analytics Dashboard',
+  'Team Performance Tracking',
+  'Priority Email & Chat Support',
+  'Regular Feature Updates'
 ];
 
-const fullTimeRoles = [
+const comparisonPoints = [
   {
-    role: 'Marketing Manager',
-    salary: '$60,000/year',
-    replaced: 'AI Marketing Agent'
+    traditional: 'Manual Scheduling',
+    withUs: 'AI-Powered Scheduling',
+    savings: '15-20 hours/week'
   },
   {
-    role: 'Sales Representative',
-    salary: '$50,000/year',
-    replaced: 'AI Sales Agent'
+    traditional: 'Paper Checklists',
+    withUs: 'Digital Quality Management',
+    savings: '10 hours/week'
   },
   {
-    role: 'Operations Manager',
-    salary: '$65,000/year',
-    replaced: 'AI Operations Agent'
+    traditional: 'Manual Route Planning',
+    withUs: 'Automated Route Optimization',
+    savings: '20% fuel costs'
   },
   {
-    role: 'HR Manager',
-    salary: '$55,000/year',
-    replaced: 'AI Hiring Agent'
+    traditional: 'Phone Bookings',
+    withUs: 'Online Customer Portal',
+    savings: '8-10 hours/week'
   }
 ];
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-24 bg-gradient-to-b from-gray-50 to-white">
+    <section id="pricing" className="py-12 sm:py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-600 px-4 py-2 rounded-full mb-8">
-            <Sparkles className="h-5 w-5" />
-            <span className="font-medium">Limited Time: 7-Day Free Trial</span>
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 md:mb-16">
+          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-3 sm:px-4 py-2 rounded-full mb-6 sm:mb-8 text-sm sm:text-base">
+            <Sparkles className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="font-medium">7-Day Free Trial • Credit Card Required</span>
           </div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Replace Your Entire Team with AI
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
+            Transform Your Cleaning Business
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Why hire multiple full-time employees when you can have an AI workforce working for you 24/7 at a fraction of the cost?
+          <p className="text-lg sm:text-xl text-gray-600 px-4">
+            Get access to our complete platform with everything you need to streamline operations
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left bg-white p-6 rounded-lg shadow-sm">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Traditional Hiring Costs</h3>
-              <ul className="space-y-3">
-                {fullTimeRoles.map((role) => (
-                  <li key={role.role} className="flex items-center justify-between text-gray-600">
-                    <span>{role.role}</span>
-                    <span className="font-medium">{role.salary}</span>
-                  </li>
-                ))}
-                <li className="pt-2 border-t border-gray-200">
-                  <div className="flex items-center justify-between font-semibold text-gray-900">
-                    <span>Total Annual Cost</span>
-                    <span>$230,000+</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-primary-600 mb-4">TaskTalent.AI Solution</h3>
-              <ul className="space-y-3">
-                {fullTimeRoles.map((role) => (
-                  <li key={role.replaced} className="flex items-center justify-between text-gray-600">
-                    <span>{role.replaced}</span>
-                    <span className="font-medium text-primary-600">Included</span>
-                  </li>
-                ))}
-                <li className="pt-2 border-t border-gray-200">
-                  <div className="flex items-center justify-between font-semibold text-primary-600">
-                    <span>Total Annual Cost</span>
-                    <span>$3,588</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
 
-        <div className="max-w-3xl mx-auto">
-          {tiers.map((tier) => (
-            <Card 
-              key={tier.name}
-              className="relative flex flex-col p-8 border-2 border-primary-600 shadow-xl"
-            >
-              <div className="absolute -top-5 left-1/2 transform -translate-x-1/2">
-                <span className="bg-primary-600 text-white text-sm font-medium px-4 py-1.5 rounded-full">
-                  Save over ${tier.savings.traditional} per year
-                </span>
-              </div>
-
-              <div className="mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  {tier.name}
+        <div className="max-w-2xl mx-auto">
+          <Card className="relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-teal-500/5" />
+            <div className="relative p-6 sm:p-8 md:p-10">
+              <div className="text-center mb-6 sm:mb-8">
+                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
+                  Complete Platform
                 </h3>
-                <div className="flex items-baseline mb-2">
-                  <span className="text-5xl font-bold text-primary-600">
-                    ${tier.price}
+                <div className="flex items-baseline justify-center mb-2 sm:mb-4">
+                  <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">
+                    $299
                   </span>
-                  <span className="text-gray-600 ml-1">/month</span>
+                  <span className="text-gray-600 ml-2">/month</span>
                 </div>
-                <div className="bg-primary-50 text-primary-700 px-3 py-1 rounded-full text-sm font-medium inline-block mb-2">
-                  Try free for 7 days
-                </div>
-                <p className="text-gray-600">
-                  {tier.description}
+                <p className="text-gray-600 text-sm sm:text-base">
+                  Billed monthly • Cancel anytime
                 </p>
               </div>
 
-              <ul className="space-y-4 mb-8">
-                {tier.features.map((feature) => (
-                  <li key={feature} className="flex items-start">
-                    <Check className="h-5 w-5 text-primary-600 shrink-0 mr-2" />
-                    <span className="text-gray-600">{feature}</span>
+              <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+                {planFeatures.map((feature) => (
+                  <div key={feature} className="flex items-start gap-3">
+                    <div className="flex-shrink-0 p-0.5 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full">
+                      <div className="bg-white p-0.5 rounded-full">
+                        <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600" />
+                      </div>
+                    </div>
+                    <span className="text-gray-700 text-sm sm:text-base">{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Button 
+                className="w-full h-11 sm:h-12 text-base sm:text-lg font-semibold bg-gradient-to-r from-blue-600 to-teal-500 
+                         text-white hover:opacity-90 transition-opacity"
+              >
+                Start 7-Day Free Trial
+              </Button>
+              <p className="text-xs sm:text-sm text-gray-500 text-center mt-3 sm:mt-4">
+                Your subscription will begin after the trial period unless canceled
+              </p>
+            </div>
+          </Card>
+
+          <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 bg-white p-4 sm:p-6 rounded-lg shadow-sm">
+            <div>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Traditional Methods</h3>
+              <ul className="space-y-2 sm:space-y-3">
+                {comparisonPoints.map((point) => (
+                  <li key={point.traditional} className="text-sm sm:text-base text-gray-600">
+                    {point.traditional}
                   </li>
                 ))}
               </ul>
-
-              <Button 
-                className="w-full bg-primary-600 hover:bg-primary-700 text-white"
-              >
-                {tier.cta}
-              </Button>
-
-              <p className="text-sm text-gray-500 text-center mt-4">
-                Credit card required • $299/month after trial • Cancel anytime
-              </p>
-            </Card>
-          ))}
+            </div>
+            <div>
+              <h3 className="text-base sm:text-lg font-semibold text-blue-600 mb-3 sm:mb-4">With CleanAgent</h3>
+              <ul className="space-y-2 sm:space-y-3">
+                {comparisonPoints.map((point) => (
+                  <li key={point.withUs} className="flex items-center justify-between text-sm sm:text-base text-gray-600">
+                    <span>{point.withUs}</span>
+                    <span className="font-medium text-blue-600">Save {point.savings}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-16 text-center">
-          <p className="text-gray-600 mb-4">
-            Need a custom solution for your enterprise?
+        <div className="mt-12 sm:mt-16 text-center">
+          <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
+            Questions about our pricing? Contact our team
           </p>
-          <Button variant="outline" size="lg">
-            Contact our team
+          <Button 
+            variant="outline" 
+            className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 text-sm sm:text-base py-2 px-4 sm:py-2.5 sm:px-6"
+          >
+            Talk to Sales
           </Button>
         </div>
       </div>

@@ -1,108 +1,110 @@
 import { 
-  Megaphone, 
-  Users, 
+  Calendar, 
+  MapPin, 
   BarChart3, 
-  Building2, 
-  Mail, 
-  PhoneCall, 
+  Users, 
+  MessageSquare, 
+  ClipboardCheck, 
   Target, 
-  Calendar,
-  PieChart,
+  Clock,
+  Truck,
   FileText,
   UserCheck,
-  Briefcase,
-  Clock,
+  CreditCard,
+  Bell,
   Bot,
   Zap,
   Shield
 } from 'lucide-react';
 
-const agents = [
+const features = [
   {
-    title: 'AI Marketing Agent',
-    description: 'Replaces your Marketing Manager with 24/7 campaign optimization',
-    icon: Megaphone,
+    title: 'Smart Scheduling',
+    description: 'AI-powered scheduling and dispatch system',
+    icon: Calendar,
     features: [
-      { text: 'Social media content creation and scheduling', icon: Calendar },
-      { text: 'Email marketing campaign automation', icon: Mail },
-      { text: 'Analytics and performance tracking', icon: BarChart3 },
-      { text: 'SEO optimization and monitoring', icon: Target }
+      { text: 'Automated booking management', icon: Clock },
+      { text: 'Intelligent staff assignment', icon: Users },
+      { text: 'Real-time availability updates', icon: Bell },
+      { text: 'Conflict resolution automation', icon: Zap }
     ]
   },
   {
-    title: 'AI Sales Agent',
-    description: 'Your tireless Sales Representative that never sleeps',
+    title: 'Route Optimization',
+    description: 'Efficient route planning and tracking',
+    icon: MapPin,
+    features: [
+      { text: 'Smart route calculation', icon: Truck },
+      { text: 'Real-time GPS tracking', icon: Target },
+      { text: 'Fuel cost optimization', icon: CreditCard },
+      { text: 'Service area management', icon: Shield }
+    ]
+  },
+  {
+    title: 'Quality Management',
+    description: 'Comprehensive quality control system',
+    icon: ClipboardCheck,
+    features: [
+      { text: 'Digital inspection checklists', icon: FileText },
+      { text: 'Photo documentation', icon: MessageSquare },
+      { text: 'Customer feedback integration', icon: UserCheck },
+      { text: 'Performance analytics', icon: BarChart3 }
+    ]
+  },
+  {
+    title: 'Customer Portal',
+    description: 'Self-service customer management',
     icon: Users,
     features: [
-      { text: 'Automated lead qualification and scoring', icon: UserCheck },
-      { text: 'Intelligent follow-up sequences', icon: PhoneCall },
-      { text: 'Sales pipeline management', icon: PieChart },
-      { text: 'Proposal and quote generation', icon: FileText }
-    ]
-  },
-  {
-    title: 'AI Operations Agent',
-    description: 'Streamlines operations like a seasoned Operations Manager',
-    icon: Building2,
-    features: [
-      { text: 'Workflow automation and optimization', icon: Zap },
-      { text: 'Resource allocation and scheduling', icon: Clock },
-      { text: 'Process monitoring and reporting', icon: Bot },
-      { text: 'Compliance and risk management', icon: Shield }
-    ]
-  },
-  {
-    title: 'AI Hiring Agent',
-    description: 'Your HR Manager powered by advanced AI',
-    icon: Briefcase,
-    features: [
-      { text: 'Smart candidate screening and matching', icon: UserCheck },
-      { text: 'Automated interview scheduling', icon: Calendar },
-      { text: 'Skills assessment and evaluation', icon: Target },
-      { text: 'Onboarding process automation', icon: Users }
+      { text: 'Online booking system', icon: Calendar },
+      { text: 'Service history tracking', icon: FileText },
+      { text: 'Instant communication', icon: MessageSquare },
+      { text: 'Automated billing', icon: CreditCard }
     ]
   }
 ];
 
 export default function Features() {
   return (
-    <section id="features" className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Your Complete AI Workforce
+    <section className="content-section bg-gray-50">
+      <div className="section-container">
+        <div className="section-header">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+            Complete Cleaning Management Solution
           </h2>
-          <p className="text-xl text-gray-600">
-            Each AI agent is designed to replace a full-time role, working 24/7 with superhuman efficiency
+          <p className="text-xl md:text-2xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            Everything you need to manage and grow your cleaning business, powered by AI
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {agents.map((agent) => (
-            <div key={agent.title} className="relative">
-              <div className="absolute -inset-px bg-gradient-to-r from-primary-600 to-primary-400 rounded-xl opacity-20" />
-              <div className="relative bg-white p-8 rounded-xl border border-gray-200 hover:border-primary-200 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-primary-50 rounded-lg">
-                    <agent.icon className="h-8 w-8 text-primary-600" />
+        <div className="card-grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          {features.map((feature) => (
+            <div 
+              key={feature.title} 
+              className="content-card gradient-border hover:shadow-xl transition-all duration-300 h-full"
+            >
+              <div className="relative card-content flex flex-col h-full">
+                <div className="card-header mb-8">
+                  <div className="card-icon bg-blue-50">
+                    <feature.icon className="h-8 w-8 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900">
-                      {agent.title}
+                    <h3 className="card-title text-2xl mb-2">
+                      {feature.title}
                     </h3>
-                    <p className="text-gray-600">
-                      {agent.description}
+                    <p className="text-gray-700 text-lg leading-relaxed">
+                      {feature.description}
                     </p>
                   </div>
                 </div>
 
-                <ul className="space-y-4">
-                  {agent.features.map((feature) => (
-                    <li key={feature.text} className="flex items-start gap-3">
-                      <div className="flex-shrink-0 p-1">
-                        <feature.icon className="h-5 w-5 text-primary-600" />
+                <ul className="space-y-6 flex-grow">
+                  {feature.features.map((item) => (
+                    <li key={item.text} className="flex items-start gap-4">
+                      <div className="flex-shrink-0 p-2 bg-blue-50 rounded-lg">
+                        <item.icon className="h-5 w-5 text-blue-600" />
                       </div>
-                      <span className="text-gray-600">{feature.text}</span>
+                      <span className="text-gray-700 text-lg leading-relaxed">{item.text}</span>
                     </li>
                   ))}
                 </ul>
@@ -111,11 +113,11 @@ export default function Features() {
           ))}
         </div>
 
-        <div className="mt-20 text-center">
-          <div className="inline-flex items-center gap-3 px-6 py-3 bg-primary-50 rounded-full">
-            <Bot className="h-6 w-6 text-primary-600" />
-            <span className="text-primary-600 font-medium">
-              All agents work together seamlessly, 24/7/365
+        <div className="mt-24 text-center">
+          <div className="inline-flex items-center gap-3 px-8 py-4 bg-blue-50 rounded-full">
+            <Bot className="h-7 w-7 text-blue-600" />
+            <span className="text-blue-700 font-medium text-lg">
+              Powered by advanced AI for maximum efficiency
             </span>
           </div>
         </div>

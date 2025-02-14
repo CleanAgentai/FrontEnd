@@ -1,19 +1,16 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { apiClient, setAuthToken, removeAuthToken } from '@/lib/api/client';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
-
-interface User {
-  id: string;
-  email: string;
-  full_name?: string;
-}
+import { User, AuthError } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, fullName: string) => Promise<void>;
-  signOut: () => Promise<void>;
+  signUp: (email: string, password: string, fullName: string) => Promise<{ error: AuthError | null }>;
+  signIn: (email: string, password: string) => Promise<{ error: AuthError | null }>;
+  signInWithGoogle: () => Promise<{ error: AuthError | null }>;
+  signInWithFacebook: () => Promise<{ error: AuthError | null }>;
+  signOut: () => Promise<{ error: AuthError | null }>;
+  resetPassword: (email: string) => Promise<{ error: AuthError | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,68 +20,90 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    checkUser();
+    // Check active sessions and sets the user
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    // Listen for changes on auth state (signed in, signed out, etc.)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  async function checkUser() {
-    try {
-      const token = localStorage.getItem('auth_token');
-      if (token) {
-        const { data } = await apiClient.get('/auth/me');
-        setUser(data.user);
-      }
-    } catch (error) {
-      removeAuthToken();
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const signUp = async (email: string, password: string, fullName: string) => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+        },
+      },
+    });
+    return { error };
+  };
 
-  async function signIn(email: string, password: string) {
-    const { data } = await apiClient.post('/auth/login', {
+  const signIn = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    
-    setAuthToken(data.token);
-    setUser(data.user);
-  }
+    return { error };
+  };
 
-  async function signUp(email: string, password: string, fullName: string) {
-    const { data } = await apiClient.post('/auth/register', {
-      email,
-      password,
-      full_name: fullName,
+  const signInWithGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
-    
-    setAuthToken(data.token);
-    setUser(data.user);
-  }
+    return { error };
+  };
 
-  async function signOut() {
-    await apiClient.post('/auth/logout');
-    removeAuthToken();
-    setUser(null);
-  }
+  const signInWithFacebook = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'facebook',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    return { error };
+  };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <LoadingSpinner />
-      </div>
-    );
-  }
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    return { error };
+  };
+
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/reset-password`,
+    });
+    return { error };
+  };
 
   const value = {
     user,
     loading,
-    signIn,
     signUp,
+    signIn,
+    signInWithGoogle,
+    signInWithFacebook,
     signOut,
+    resetPassword,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {
@@ -93,4 +112,4 @@ export function useAuth() {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}
+} 

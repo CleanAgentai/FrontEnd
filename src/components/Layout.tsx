@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import Navigation from './Navigation';
 import Footer from './Footer';
 
@@ -14,6 +15,7 @@ export default function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <Footer />
+      <Analytics />
     </div>
   );
 } 

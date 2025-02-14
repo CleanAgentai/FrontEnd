@@ -1,32 +1,71 @@
-import { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Toaster } from '@/components/ui/toaster';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '@/contexts/AuthContext';
 import Layout from '@/components/Layout';
-import * as Pages from '@/lib/routes';
+import Hero from '@/components/Hero';
+import About from '@/components/About';
+import Features from '@/components/Features';
+import Pricing from '@/components/Pricing';
+import Testimonials from '@/components/Testimonials';
+import Blog from '@/components/Blog';
+import FAQ from '@/components/FAQ';
+import HowItWorks from '@/components/HowItWorks';
+import SignUpPage from '@/pages/auth/SignUpPage';
+import LoginPage from '@/pages/auth/LoginPage';
+import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
+
+function LandingPage() {
+  return (
+    <div className="pt-16">
+      <section id="hero">
+        <Hero />
+      </section>
+      
+      <section id="how-it-works">
+        <HowItWorks />
+      </section>
+
+      <section id="about">
+        <About />
+      </section>
+
+      <section id="features">
+        <Features />
+      </section>
+
+      <section id="pricing">
+        <Pricing />
+      </section>
+
+      <section id="testimonials">
+        <Testimonials />
+      </section>
+
+      <section id="blog">
+        <Blog />
+      </section>
+
+      <section id="faq">
+        <FAQ />
+      </section>
+    </div>
+  );
+}
 
 export default function App() {
   return (
-    <>
-      <Layout>
-        <Suspense fallback={
-          <div className="flex items-center justify-center min-h-screen">
-            <LoadingSpinner />
-          </div>
-        }>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/" element={<Pages.LandingPage />} />
-            <Route path="/about" element={<Pages.AboutPage />} />
-            <Route path="/features" element={<Pages.FeaturesPage />} />
-            <Route path="/testimonials" element={<Pages.TestimonialsPage />} />
-            <Route path="/faq" element={<Pages.FAQPage />} />
-            <Route path="/blog" element={<Pages.BlogPage />} />
-            <Route path="/careers" element={<Pages.CareersPage />} />
-          </Routes>
-        </Suspense>
-      </Layout>
-      <Toaster />
-    </>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/" element={
+            <Layout>
+              <LandingPage />
+            </Layout>
+          } />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }

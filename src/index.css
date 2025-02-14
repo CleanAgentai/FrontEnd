@@ -4,14 +4,85 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* Accounts for fixed header */
+}
+
+section {
+  scroll-margin-top: 5rem; /* Matches scroll-padding-top */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-  }
 
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 221 83% 53%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221 83% 53%;
+ 
+    --radius: 0.75rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
   body {
-    @apply bg-white text-gray-900 font-sans;
+    @apply bg-background text-foreground;
   }
 }
 
@@ -25,5 +96,129 @@
     @apply bg-white border border-gray-200 rounded px-3 py-2
            focus:border-primary focus:ring-1 focus:ring-primary
            text-gray-900 placeholder:text-gray-500;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    @apply bg-gradient-to-r from-blue-600 to-teal-500;
+  }
+  
+  .gradient-hover {
+    @apply hover:opacity-90 transition-opacity;
+  }
+
+  .button-primary {
+    @apply gradient-primary text-white rounded-full px-6 py-3 font-medium gradient-hover;
+  }
+
+  .button-secondary {
+    @apply bg-white text-blue-600 border-2 border-blue-600 rounded-full px-6 py-3 font-medium 
+           hover:bg-blue-50 transition-colors;
+  }
+
+  .card-hover {
+    @apply hover:shadow-lg transition-shadow duration-300 ease-in-out;
+  }
+
+  .content-card {
+    @apply bg-white rounded-xl border border-gray-100 shadow-sm transition-all duration-300;
+  }
+
+  .content-section {
+    @apply py-16 sm:py-20 md:py-28 px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-container {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .section-header {
+    @apply text-center max-w-4xl mx-auto mb-16 sm:mb-20 md:mb-24 px-4;
+  }
+
+  .section-title {
+    @apply text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4;
+  }
+
+  .section-description {
+    @apply text-lg sm:text-xl text-gray-600;
+  }
+
+  .card-grid {
+    @apply grid gap-6 sm:gap-8 md:gap-12;
+  }
+
+  .card-header {
+    @apply flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6;
+  }
+
+  .card-icon {
+    @apply p-3 sm:p-4 rounded-xl bg-gradient-to-r from-blue-50 to-blue-100 text-blue-600 shrink-0 
+           flex items-center justify-center transition-colors duration-300;
+  }
+
+  .card-title {
+    @apply text-xl sm:text-2xl font-semibold text-gray-900 leading-tight;
+  }
+
+  .card-content {
+    @apply p-6 sm:p-8 md:p-10;
+  }
+
+  .gradient-border {
+    @apply relative before:absolute before:-inset-[1px] before:rounded-xl 
+           before:bg-gradient-to-r before:from-blue-600 before:to-teal-500 
+           before:opacity-10 hover:before:opacity-20 before:transition-opacity;
+  }
+
+  /* Mobile Navigation */
+  .mobile-nav {
+    @apply fixed inset-x-0 top-16 bg-white border-b border-gray-100 shadow-lg transform transition-transform duration-300 ease-in-out;
+  }
+
+  .mobile-nav-enter {
+    @apply translate-y-0;
+  }
+
+  .mobile-nav-exit {
+    @apply -translate-y-full;
+  }
+
+  .mobile-nav-item {
+    @apply w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 transition-colors;
+  }
+
+  /* Responsive Text */
+  .text-responsive {
+    @apply text-base sm:text-lg md:text-xl;
+  }
+
+  .heading-responsive {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  /* Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-scale {
+    @apply hover:scale-105 transition-transform duration-300;
+  }
+
+  .animate-glow {
+    @apply relative after:absolute after:inset-0 after:rounded-xl after:bg-gradient-to-r after:from-blue-600/20 after:to-teal-500/20 after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-300;
   }
 }
