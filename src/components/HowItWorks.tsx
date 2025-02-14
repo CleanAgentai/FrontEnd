@@ -64,7 +64,7 @@ export default function HowItWorks() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <div
               key={step.number}
               className="step-card opacity-0 transform translate-y-8 transition-all duration-700 ease-out"
