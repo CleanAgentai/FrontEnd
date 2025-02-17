@@ -4,52 +4,49 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const faqs = [
   {
-    question: "How does CleanAgent's scheduling system work?",
-    answer: "Our AI-powered scheduling system automatically assigns cleaning staff based on their availability, skills, and location. It considers factors like travel time, service duration, and customer preferences to create optimal schedules that maximize efficiency and minimize costs."
+    question: "How does CleanAgent save time and money?",
+    answer: "Our AI automates repetitive tasks, reducing operational workload by 85% and cutting costs by 90%. This includes automated hiring, scheduling, customer communication, and quality control. Most businesses save 20+ hours per week."
   },
   {
-    question: "Can I track my cleaning staff in real-time?",
-    answer: "Yes, CleanAgent provides real-time GPS tracking of your cleaning staff through our mobile app. You can see their current location, track completed tasks, and get instant notifications about schedule changes or delays."
+    question: "Can I customize the AI for my business?",
+    answer: "Yes, CleanAgent adapts to your workflows and integrates with your current software. The AI learns your business preferences, service areas, pricing structure, and team availability to provide personalized automation."
   },
   {
-    question: "How does the quality management system ensure consistent cleaning standards?",
-    answer: "Our digital quality management system includes customizable checklists, photo documentation, and customer feedback integration. Supervisors can perform digital inspections, and the system automatically tracks completion rates and identifies areas for improvement."
+    question: "How does AI improve customer satisfaction?",
+    answer: "AI automates follow-ups, handles scheduling, and ensures service quality tracking—leading to 30% better customer retention. The system provides instant responses, proactive communication, and consistent service delivery."
   },
   {
-    question: "What kind of support do you provide during onboarding?",
-    answer: "We provide comprehensive onboarding support including personalized training sessions, setup assistance, and dedicated support during your first month. Our team helps with staff training, data migration, and customizing the system to match your workflow."
+    question: "What's included in the free trial?",
+    answer: "Your 7-day free trial includes full access to all features: AI hiring, sales automation, scheduling, and operations management. You'll get hands-on experience with the platform and see how it can transform your business."
   },
   {
-    question: "Can customers book cleaning services online?",
-    answer: "Yes, CleanAgent includes a customizable customer portal where clients can book services, view their cleaning history, communicate with your team, and manage their payments. The portal can be branded with your company's logo and colors."
+    question: "How long does it take to get started?",
+    answer: "You can start using CleanAgent immediately after signing up. Our AI quickly learns your business operations, and most companies see significant improvements within the first week. We also provide onboarding support to ensure smooth adoption."
   },
   {
-    question: "How does route optimization save fuel costs?",
-    answer: "Our AI-powered route optimization considers factors like traffic patterns, service duration, and staff location to create the most efficient routes. Customers typically see a 15-20% reduction in fuel costs and can service more clients in less time."
-  },
-  {
-    question: "Is the mobile app available for all staff members?",
-    answer: "Yes, all staff members get access to our mobile app, which includes features like schedule viewing, route navigation, digital checklists, time tracking, and communication tools. The app works on both iOS and Android devices."
-  },
-  {
-    question: "Can I integrate CleanAgent with my existing software?",
-    answer: "Yes, CleanAgent offers API access in our Business and Enterprise plans, allowing integration with accounting software, HR systems, and other business tools. We also provide pre-built integrations with popular platforms."
+    question: "Is my data secure?",
+    answer: "Yes, we use enterprise-grade encryption and security measures to protect your data. Our platform complies with industry standards and regulations, ensuring your business information remains confidential and secure."
   }
 ];
 
 export default function FAQ() {
+  const navigate = useNavigate();
+  
   return (
-    <section id="faq" className="py-16 sm:py-20 md:py-24 bg-gray-50">
+    <section id="faq" className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl sm:text-2xl text-gray-700 leading-relaxed">
-            Everything you need to know about managing your cleaning business with CleanAgent
+          <p className="text-xl text-gray-600">
+            Learn how CleanAgent can transform your cleaning business
           </p>
         </div>
 
@@ -57,21 +54,21 @@ export default function FAQ() {
           <Accordion 
             type="single" 
             collapsible 
-            className="divide-y divide-gray-200"
+            className="divide-y divide-gray-100"
           >
             {faqs.map((faq, index) => (
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`}
-                className="px-6 py-2 first:rounded-t-2xl last:rounded-b-2xl hover:bg-gray-50/50 transition-colors"
+                className="px-6 py-3 first:rounded-t-2xl last:rounded-b-2xl hover:bg-gray-50/50 transition-colors"
               >
-                <AccordionTrigger className="flex py-4 sm:py-6 text-left">
-                  <span className="text-lg sm:text-xl font-semibold text-gray-900 leading-relaxed pr-8">
+                <AccordionTrigger className="flex py-4 text-left">
+                  <span className="text-lg font-semibold text-gray-900 pr-8">
                     {faq.question}
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="pb-6">
-                  <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
+                <AccordionContent className="pb-4">
+                  <p className="text-gray-600 leading-relaxed">
                     {faq.answer}
                   </p>
                 </AccordionContent>
@@ -80,12 +77,38 @@ export default function FAQ() {
           </Accordion>
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-lg text-gray-700 mb-6">
-            Still have questions? We're here to help.
-          </p>
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-teal-500 text-white px-6 py-3 rounded-full font-medium hover:opacity-90 transition-opacity">
-            Contact Support
+        <div className="mt-16 text-center">
+          <div className="max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              Ready to transform your cleaning business?
+            </h3>
+            <p className="text-lg text-gray-600 mb-8">
+              Start your 7-day free trial today. Only $299/month after trial period.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button 
+                className="button-primary group text-lg"
+                onClick={() => navigate('/signup')}
+              >
+                Try Free - 7 Days
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button 
+                variant="outline"
+                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors text-lg"
+                onClick={() => {
+                  const pricingSection = document.getElementById('pricing');
+                  if (pricingSection) {
+                    pricingSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                View Pricing
+              </Button>
+            </div>
+            <p className="mt-4 text-sm text-gray-500">
+              No credit card required • Cancel anytime
+            </p>
           </div>
         </div>
       </div>

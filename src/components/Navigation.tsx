@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 const navItems = [
+  { name: 'How It Works', section: 'how-it-works' },
   { name: 'Features', section: 'features' },
-  { name: 'About', section: 'about' },
-  { name: 'Pricing', section: 'pricing' },
-  { name: 'Testimonials', section: 'testimonials' },
-  { name: 'Blog', section: 'blog' }
+  { name: 'Pricing', section: 'pricing' }
 ];
 
 export default function Navigation() {
@@ -63,17 +61,23 @@ export default function Navigation() {
             </div>
             <div className="ml-4 lg:ml-6 flex items-center gap-3">
               <Button 
-                variant="ghost"
-                className="text-gray-600 hover:text-blue-600"
-                onClick={() => navigate('/login')}
+                variant="outline"
+                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors"
+                onClick={() => {
+                  const pricingSection = document.getElementById('pricing');
+                  if (pricingSection) {
+                    pricingSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
               >
-                Log in
+                View Pricing
               </Button>
               <Button 
-                className="button-primary"
+                className="button-primary group"
                 onClick={() => navigate('/signup')}
               >
-                Get Started
+                Try Free
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </div>
@@ -95,11 +99,6 @@ export default function Navigation() {
           className={`md:hidden mobile-nav ${
             isOpen ? 'mobile-nav-enter' : 'mobile-nav-exit'
           }`}
-          style={{ 
-            maxHeight: isOpen ? '100vh' : '0',
-            overflow: 'hidden',
-            transition: 'max-height 0.3s ease-in-out'
-          }}
         >
           <div className="py-2 space-y-1">
             {navItems.map((item) => (
@@ -112,19 +111,26 @@ export default function Navigation() {
                 {item.name}
               </Button>
             ))}
-            <div className="px-4 py-3 space-y-2">
+            <div className="px-4 py-3 space-y-3">
               <Button 
-                variant="ghost"
-                className="w-full text-gray-600 hover:text-blue-600"
-                onClick={() => navigate('/login')}
+                variant="outline"
+                className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors"
+                onClick={() => {
+                  const pricingSection = document.getElementById('pricing');
+                  if (pricingSection) {
+                    pricingSection.scrollIntoView({ behavior: 'smooth' });
+                    setIsOpen(false);
+                  }
+                }}
               >
-                Log in
+                View Pricing
               </Button>
               <Button 
-                className="button-primary w-full"
+                className="button-primary w-full group"
                 onClick={() => navigate('/signup')}
               >
-                Get Started
+                Try Free
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
           </div>

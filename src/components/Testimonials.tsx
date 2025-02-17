@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star, Quote, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
 interface Testimonial {
   name: string;
@@ -21,35 +22,36 @@ const testimonials: Testimonial[] = [
     name: "Sarah Johnson",
     role: "Owner, Pristine Cleaning Services",
     image: "/testimonials/sarah.jpg",
-    quote: "CleanAgent transformed our business. The AI scheduling saved us 20 hours a week, and the route optimization cut our fuel costs by 25%. Our staff love the mobile app!",
+    quote: "CleanAgent automated our hiring process, cutting our hiring time from 2 weeks to just 2 days. The AI handles everything from job posting to onboarding.",
     rating: 5,
   },
   {
     name: "Michael Chen",
     role: "CEO, GreenClean Pro",
     image: "/testimonials/michael.jpg",
-    quote: "Since implementing CleanAgent, we've grown from 5 to 25 cleaners without increasing office staff. The customer portal and automated scheduling are game-changers.",
+    quote: "We saved over 20 hours per week on scheduling alone. Our clients love the AI-powered communication, and our team is much more efficient now.",
     rating: 5,
   },
   {
     name: "Lisa Rodriguez",
     role: "Operations Manager, Sparkle Solutions",
     image: "/testimonials/lisa.jpg",
-    quote: "The quality management system has improved our service consistency dramatically. Our customer satisfaction scores are up 40% since we started using CleanAgent.",
+    quote: "Our lead conversion rates increased by 40% after implementing AI-driven follow-ups. The automated scheduling and quality control are game-changers.",
     rating: 5,
   },
 ];
 
 const stats: Stat[] = [
-  { value: "500+", label: "Cleaning Companies" },
-  { value: "10,000+", label: "Active Cleaners" },
-  { value: "1M+", label: "Jobs Completed" },
-  { value: "98%", label: "Customer Satisfaction" },
+  { value: "2 Days", label: "Average Hiring Time" },
+  { value: "20h", label: "Weekly Time Saved" },
+  { value: "40%", label: "Higher Conversion" },
+  { value: "90%", label: "Lower Costs" },
 ];
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -91,20 +93,20 @@ export default function Testimonials() {
               >
                 {testimonials.map((testimonial, index) => (
                   <div key={index} className="w-full flex-shrink-0">
-                    <Card className="h-full shadow-lg hover:shadow-xl transition-shadow duration-300">
-                      <div className="p-6 sm:p-8">
-                        <div className="absolute top-6 right-6">
+                    <Card className="h-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-white to-gray-50/50">
+                      <div className="p-8">
+                        <div className="absolute top-8 right-8">
                           <div className="bg-gradient-to-r from-blue-600 to-teal-500 p-0.5 rounded-full">
-                            <div className="bg-white p-1.5 rounded-full">
+                            <div className="bg-white p-2 rounded-full">
                               <Quote className="h-6 w-6 text-blue-600" />
                             </div>
                           </div>
                         </div>
 
                         <div className="flex items-center gap-4 mb-6">
-                          <div className="h-14 w-14 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 p-0.5">
+                          <div className="h-16 w-16 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 p-0.5">
                             <div className="h-full w-full rounded-full bg-blue-50 flex items-center justify-center">
-                              <span className="text-xl font-semibold text-blue-600">
+                              <span className="text-2xl font-semibold text-blue-600">
                                 {testimonial.name.charAt(0)}
                               </span>
                             </div>
@@ -163,21 +165,21 @@ export default function Testimonials() {
             {testimonials.map((testimonial, index) => (
               <Card 
                 key={index} 
-                className="h-full shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="h-full shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-white to-gray-50/50"
               >
-                <div className="p-6 sm:p-8">
-                  <div className="absolute top-6 right-6">
+                <div className="p-8">
+                  <div className="absolute top-8 right-8">
                     <div className="bg-gradient-to-r from-blue-600 to-teal-500 p-0.5 rounded-full">
-                      <div className="bg-white p-1.5 rounded-full">
+                      <div className="bg-white p-2 rounded-full">
                         <Quote className="h-6 w-6 text-blue-600" />
                       </div>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="h-14 w-14 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 p-0.5">
+                    <div className="h-16 w-16 rounded-full bg-gradient-to-r from-blue-600 to-teal-500 p-0.5">
                       <div className="h-full w-full rounded-full bg-blue-50 flex items-center justify-center">
-                        <span className="text-xl font-semibold text-blue-600">
+                        <span className="text-2xl font-semibold text-blue-600">
                           {testimonial.name.charAt(0)}
                         </span>
                       </div>
@@ -242,6 +244,42 @@ export default function Testimonials() {
                 <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-r from-teal-500/5 to-blue-600/5 rounded-tl-full" />
               </div>
             </Card>
+          </div>
+        </div>
+
+        <div className="mt-16 text-center">
+          <div className="max-w-2xl mx-auto px-4">
+            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
+              Ready to transform your cleaning business?
+            </h3>
+            <p className="text-lg text-gray-600 mb-8">
+              Join hundreds of cleaning companies saving 20+ hours per week with CleanAgent.
+              Start your free trial today - only $299/month after trial period.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button 
+                className="button-primary group text-lg px-8"
+                onClick={() => navigate('/signup')}
+              >
+                Start Free Trial
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button 
+                variant="outline"
+                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors text-lg px-8"
+                onClick={() => {
+                  const pricingSection = document.getElementById('pricing');
+                  if (pricingSection) {
+                    pricingSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                View Pricing
+              </Button>
+            </div>
+            <p className="mt-4 text-sm text-gray-500">
+              No credit card required • 7-day free trial • Cancel anytime
+            </p>
           </div>
         </div>
       </div>
