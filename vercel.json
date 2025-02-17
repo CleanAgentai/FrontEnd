@@ -5,7 +5,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "github": {
-    "silent": true
+    "silent": true,
+    "autoAlias": true
   },
   "headers": [
     {
@@ -57,5 +58,10 @@
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  ],
+  "env": {
+    "VITE_SUPABASE_URL": "https://olccnhumzhigstllfnua.supabase.co",
+    "VITE_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sY2NuaHVtemhpZ3N0bGxmbnVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ5MDg1NTcsImV4cCI6MjA1MDQ4NDU1N30.ShAYlcMVkMVLsF0R7W1Xb0707hfDQSAesYP8DcGg72g",
+    "VITE_STRIPE_PUBLIC_KEY": "pk_test_51QX5IcCWixtFtGjY4Px7EXYj5e1Rw2wcvm1cLOcmcxNMkOW1VsE1NcrHreBxJWyryml6qmKrchrqcLwqawetaQ7P00J5idJB7X"
+  }
 }
