@@ -32,11 +32,11 @@ export default function Navigation() {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm transition-all duration-300 ${
       scrolled || isOpen ? 'shadow-md' : 'shadow-sm'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-14 items-center">
+        <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0 flex items-center">
             <button 
               onClick={() => scrollToSection('hero')}
@@ -59,21 +59,9 @@ export default function Navigation() {
                 </Button>
               ))}
             </div>
-            <div className="ml-4 lg:ml-6 flex items-center gap-3">
+            <div className="ml-4 lg:ml-6">
               <Button 
-                variant="outline"
-                className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors"
-                onClick={() => {
-                  const pricingSection = document.getElementById('pricing');
-                  if (pricingSection) {
-                    pricingSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-              >
-                View Pricing
-              </Button>
-              <Button 
-                className="button-primary group"
+                className="bg-gradient-to-r from-blue-600 to-teal-500 text-white hover:opacity-90 transition-opacity group"
                 onClick={() => navigate('/signup')}
               >
                 Try Free
@@ -111,22 +99,9 @@ export default function Navigation() {
                 {item.name}
               </Button>
             ))}
-            <div className="px-4 py-3 space-y-3">
+            <div className="px-4 py-3">
               <Button 
-                variant="outline"
-                className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors"
-                onClick={() => {
-                  const pricingSection = document.getElementById('pricing');
-                  if (pricingSection) {
-                    pricingSection.scrollIntoView({ behavior: 'smooth' });
-                    setIsOpen(false);
-                  }
-                }}
-              >
-                View Pricing
-              </Button>
-              <Button 
-                className="button-primary w-full group"
+                className="w-full bg-gradient-to-r from-blue-600 to-teal-500 text-white hover:opacity-90 transition-opacity group"
                 onClick={() => navigate('/signup')}
               >
                 Try Free

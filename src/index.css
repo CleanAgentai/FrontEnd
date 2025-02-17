@@ -221,4 +221,96 @@ section {
   .animate-glow {
     @apply relative after:absolute after:inset-0 after:rounded-xl after:bg-gradient-to-r after:from-blue-600/20 after:to-teal-500/20 after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-300;
   }
+
+  /* Enhanced Animations */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 8s ease-in-out 4s infinite;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-20px) scale(1.05);
+    }
+  }
+
+  /* Enhanced Gradients */
+  .gradient-mask-b {
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  }
+
+  .gradient-mask-t {
+    mask-image: linear-gradient(to top, black 50%, transparent 100%);
+  }
+
+  /* Glass Effect */
+  .glass-effect {
+    @apply bg-white/[0.08] backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300;
+  }
+
+  /* Hover Effects */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .hover-glow {
+    @apply relative after:absolute after:inset-0 after:rounded-xl after:bg-gradient-to-r after:from-blue-600/20 after:to-teal-500/20 after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-300;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: theme('colors.gray.100');
+}
+
+::-webkit-scrollbar-thumb {
+  background: theme('colors.blue.500');
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.blue.600');
 }

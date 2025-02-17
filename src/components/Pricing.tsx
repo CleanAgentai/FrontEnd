@@ -56,37 +56,37 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto mb-16">
+        <div className="max-w-4xl mx-auto mb-16">
           <Card className="relative overflow-hidden rounded-2xl border-2 border-blue-600">
-            <div className="relative p-8 sm:p-10 bg-white">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            <div className="relative p-8 sm:p-12 bg-white">
+              <div className="text-center mb-10">
+                <h3 className="text-3xl font-bold text-gray-900 mb-6">
                   Complete AI Platform
                 </h3>
-                <div className="flex items-baseline justify-center gap-2 mb-2">
-                  <span className="text-5xl font-bold text-blue-600">
+                <div className="flex items-baseline justify-center gap-2 mb-4">
+                  <span className="text-6xl font-bold text-blue-600">
                     $299
                   </span>
-                  <span className="text-lg text-gray-600">/month</span>
+                  <span className="text-xl text-gray-600">/month</span>
                 </div>
-                <p className="text-gray-600 text-lg">
+                <p className="text-gray-600 text-xl">
                   Everything you need to automate your cleaning business
                 </p>
               </div>
 
-              <div className="space-y-4 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
                 {planFeatures.map((feature) => (
                   <div key={feature} className="flex items-start gap-3">
                     <div className="flex-shrink-0 bg-blue-100 rounded-full p-1">
-                      <Check className="h-4 w-4 text-blue-600" />
+                      <Check className="h-5 w-5 text-blue-600" />
                     </div>
-                    <span className="text-gray-700">{feature}</span>
+                    <span className="text-gray-700 text-lg">{feature}</span>
                   </div>
                 ))}
               </div>
 
               <Button 
-                className="w-full h-12 text-lg font-semibold bg-blue-600 
+                className="w-full h-14 text-lg font-semibold bg-blue-600 
                          text-white hover:bg-blue-700 transition-colors group"
                 onClick={() => navigate('/signup')}
               >

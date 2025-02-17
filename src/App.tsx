@@ -9,6 +9,7 @@ import Testimonials from '@/components/Testimonials';
 import Blog from '@/components/Blog';
 import FAQ from '@/components/FAQ';
 import HowItWorks from '@/components/HowItWorks';
+import Stats from '@/components/Stats';
 import SignUpPage from '@/pages/auth/SignUpPage';
 import LoginPage from '@/pages/auth/LoginPage';
 import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
@@ -22,6 +23,10 @@ function LandingPage() {
       
       <section id="how-it-works">
         <HowItWorks />
+      </section>
+
+      <section id="stats">
+        <Stats />
       </section>
 
       <section id="about">
