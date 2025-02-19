@@ -1,19 +1,21 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Eye, EyeOff, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useAuth } from '@/contexts/AuthContext';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Eye, EyeOff, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabase";
+// import { useToast } from "@/hooks/use-toast";
 
 const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(1, 'Password is required'),
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(1, "Password is required"),
 });
 
 type LoginFormData = {
@@ -23,32 +25,57 @@ type LoginFormData = {
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const { signIn, signInWithGoogle, signInWithFacebook } = useAuth();
+  const { signIn, signInWithFacebook } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-
-  const { register, handleSubmit, formState: { errors, isSubmitting, touchedFields }, watch } = useForm<LoginFormData>({
+  // const { toast } = useToast();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, touchedFields },
+    watch,
+  } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
-      password: ''
-    }
+      email: "",
+      password: "",
+    },
   });
-
-  const handleGoogleLogin = async () => {
+  const handleOAuthSignIn = async (provider: "google" | "facebook") => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      setFormError(null);
-      const { error } = await signInWithGoogle();
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`,
+          queryParams: {
+            prompt: "select_account",
+          },
+        },
+      });
       if (error) throw error;
-    } catch (error) {
-      setFormError('Google login failed. Please try again.');
-      console.error('Google login failed:', error);
+      //toast({ title: "Redirecting to OAuth...", variant: "default" });
+    } catch (error: any) {
+      setFormError("Google login failed. Please try again.");
+      console.error("Google login failed:", error);
     } finally {
       setIsLoading(false);
     }
   };
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     setFormError(null);
+  //     const { error } = await signInWithGoogle();
+  //     if (error) throw error;
+  //   } catch (error) {
+  //     setFormError("Google login failed. Please try again.");
+  //     console.error("Google login failed:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleFacebookLogin = async () => {
     try {
@@ -57,8 +84,8 @@ export default function LoginForm() {
       const { error } = await signInWithFacebook();
       if (error) throw error;
     } catch (error) {
-      setFormError('Facebook login failed. Please try again.');
-      console.error('Facebook login failed:', error);
+      setFormError("Facebook login failed. Please try again.");
+      console.error("Facebook login failed:", error);
     } finally {
       setIsLoading(false);
     }
@@ -71,10 +98,12 @@ export default function LoginForm() {
       const { error } = await signIn(data.email, data.password);
       if (error) throw error;
       // On success, redirect to dashboard
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error: any) {
-      setFormError(error.message || 'Invalid email or password. Please try again.');
-      console.error('Login failed:', error);
+      setFormError(
+        error.message || "Invalid email or password. Please try again."
+      );
+      console.error("Login failed:", error);
     } finally {
       setIsLoading(false);
     }
@@ -104,7 +133,7 @@ export default function LoginForm() {
           <div className="grid grid-cols-2 gap-3">
             <Button
               type="button"
-              onClick={handleGoogleLogin}
+              onClick={() => handleOAuthSignIn("google")}
               disabled={isLoading}
               className="h-10 bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
             >
@@ -150,35 +179,47 @@ export default function LoginForm() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="px-2 bg-white text-gray-500">Or continue with email</span>
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with email
+              </span>
             </div>
           </div>
 
           {/* Login Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <div>
-              <Label htmlFor="email" className="text-sm">Email Address</Label>
+              <Label htmlFor="email" className="text-sm">
+                Email Address
+              </Label>
               <Input
                 id="email"
                 type="email"
-                {...register('email')}
-                className={`h-10 ${errors.email || (touchedFields.email && !watch('email')) ? 'border-red-500 focus:ring-red-500' : ''}`}
+                {...register("email")}
+                className={`h-10 ${
+                  errors.email || (touchedFields.email && !watch("email"))
+                    ? "border-red-500 focus:ring-red-500"
+                    : ""
+                }`}
                 aria-invalid={!!errors.email}
-                aria-describedby={errors.email ? 'email-error' : undefined}
+                aria-describedby={errors.email ? "email-error" : undefined}
               />
               {errors.email && (
-                <p id="email-error" className="mt-1 text-xs text-red-600">{errors.email.message}</p>
+                <p id="email-error" className="mt-1 text-xs text-red-600">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-sm">Password</Label>
+                <Label htmlFor="password" className="text-sm">
+                  Password
+                </Label>
                 <Button
                   type="button"
                   variant="link"
                   className="text-xs text-blue-600 hover:text-blue-700 p-0"
-                  onClick={() => navigate('/forgot-password')}
+                  onClick={() => navigate("/forgot-password")}
                 >
                   Forgot password?
                 </Button>
@@ -186,22 +227,35 @@ export default function LoginForm() {
               <div className="relative">
                 <Input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  {...register('password')}
-                  className={`h-10 pr-10 ${errors.password || (touchedFields.password && !watch('password')) ? 'border-red-500 focus:ring-red-500' : ''}`}
+                  type={showPassword ? "text" : "password"}
+                  {...register("password")}
+                  className={`h-10 pr-10 ${
+                    errors.password ||
+                    (touchedFields.password && !watch("password"))
+                      ? "border-red-500 focus:ring-red-500"
+                      : ""
+                  }`}
                   aria-invalid={!!errors.password}
-                  aria-describedby={errors.password ? 'password-error' : undefined}
+                  aria-describedby={
+                    errors.password ? "password-error" : undefined
+                  }
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </button>
               </div>
               {errors.password && (
-                <p id="password-error" className="mt-1 text-xs text-red-600">{errors.password.message}</p>
+                <p id="password-error" className="mt-1 text-xs text-red-600">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -210,39 +264,39 @@ export default function LoginForm() {
               disabled={isLoading || isSubmitting}
               className="w-full h-10 bg-gradient-to-r from-blue-600 to-teal-500 text-white hover:opacity-90 transition-opacity"
             >
-              {isLoading || isSubmitting ? 'Signing in...' : 'Sign in'}
+              {isLoading || isSubmitting ? "Signing in..." : "Sign in"}
             </Button>
           </form>
 
           <div className="space-y-4">
             <p className="text-center text-sm text-gray-600">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <Button
                 type="button"
                 variant="link"
                 className="text-blue-600 hover:text-blue-700 font-medium p-0 text-sm"
-                onClick={() => navigate('/signup')}
+                onClick={() => navigate("/signup")}
               >
                 Create an account
               </Button>
             </p>
 
             <div className="text-center text-xs text-gray-500">
-              By signing in, you agree to our{' '}
+              By signing in, you agree to our{" "}
               <Button
                 type="button"
                 variant="link"
                 className="p-0 text-gray-500 hover:text-gray-700 h-auto text-xs"
-                onClick={() => window.open('/terms', '_blank')}
+                onClick={() => window.open("/terms", "_blank")}
               >
                 Terms of Service
-              </Button>
-              {' '}and{' '}
+              </Button>{" "}
+              and{" "}
               <Button
                 type="button"
                 variant="link"
                 className="p-0 text-gray-500 hover:text-gray-700 h-auto text-xs"
-                onClick={() => window.open('/privacy', '_blank')}
+                onClick={() => window.open("/privacy", "_blank")}
               >
                 Privacy Policy
               </Button>
@@ -252,4 +306,4 @@ export default function LoginForm() {
       </Card>
     </div>
   );
-} 
+}
