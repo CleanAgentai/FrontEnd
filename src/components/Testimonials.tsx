@@ -1,16 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
-
-interface Testimonial {
-  id: number;
-  name: string;
-  role: string;
-  image: string;
-  quote: string;
-  highlight: string;
-}
 
 const testimonials = [
   {
