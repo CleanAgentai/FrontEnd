@@ -82,7 +82,7 @@ export default function About() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {features.map((feature, index) => (
+          {features.map((feature) => (
             <div 
               key={feature.title}
               className="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"

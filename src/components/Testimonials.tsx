@@ -13,11 +13,6 @@ interface Testimonial {
   highlight: string;
 }
 
-interface Stat {
-  value: string;
-  label: string;
-}
-
 const testimonials: Testimonial[] = [
   {
     name: "Sarah Johnson",
@@ -43,13 +38,6 @@ const testimonials: Testimonial[] = [
     rating: 5,
     highlight: "40% more conversions"
   },
-];
-
-const stats: Stat[] = [
-  { value: "2 Days", label: "Average Hiring Time" },
-  { value: "20h", label: "Weekly Time Saved" },
-  { value: "40%", label: "Higher Conversion" },
-  { value: "90%", label: "Lower Costs" },
 ];
 
 export default function Testimonials() {

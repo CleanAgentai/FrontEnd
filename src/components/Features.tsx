@@ -8,7 +8,6 @@ import {
   Bot,
   Zap,
   ArrowRight,
-  CheckCircle,
   Sparkles,
   Rocket
 } from 'lucide-react';
