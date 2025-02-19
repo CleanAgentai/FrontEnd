@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, ArrowRight, Calendar, User, Tag } from 'lucide-react';
+import { Search, ArrowRight, Calendar, User, Tag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
