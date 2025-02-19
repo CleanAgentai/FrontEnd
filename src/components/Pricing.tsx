@@ -39,9 +39,13 @@ const comparisonPoints = [
 
 export default function Pricing() {
   const navigate = useNavigate();
+
+  const handleTalkToSales = () => {
+    window.location.href = 'mailto:support@cleanagent.ai?subject=Sales Inquiry - CleanAgent.AI';
+  };
   
   return (
-    <section id="pricing" className="py-24 bg-white">
+    <section id="pricing" className="py-24 bg-white scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full mb-6">
@@ -135,6 +139,7 @@ export default function Pricing() {
           <Button 
             variant="outline" 
             className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors"
+            onClick={handleTalkToSales}
           >
             Talk to Sales
           </Button>

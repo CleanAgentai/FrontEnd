@@ -13,6 +13,14 @@ import Stats from '@/components/Stats';
 import SignUpPage from '@/pages/auth/SignUpPage';
 import LoginPage from '@/pages/auth/LoginPage';
 import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage';
+import PrivacyPolicy from '@/components/PrivacyPolicy';
+import CookiePolicy from '@/components/CookiePolicy';
+import TermsOfService from '@/components/TermsOfService';
+import AboutUs from '@/components/AboutUs';
+import BlogPage from '@/pages/BlogPage';
+import BlogPost from '@/components/BlogPost';
+import Contact from '@/components/Contact';
+import { Toaster } from '@/components/ui/toaster';
 
 function LandingPage() {
   return (
@@ -61,15 +69,21 @@ export default function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+          </Route>
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/" element={
-            <Layout>
-              <LandingPage />
-            </Layout>
-          } />
         </Routes>
+        <Toaster />
       </Router>
     </AuthProvider>
   );

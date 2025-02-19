@@ -1,18 +1,38 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { Mail } from 'lucide-react';
+import { Mail, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function ForgotPassword() {
+  const navigate = useNavigate();
+  const { resetPassword } = useAuth();
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your password reset logic here
-    setIsSubmitted(true);
+    if (!email) return;
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const { error: resetError } = await resetPassword(email);
+      if (resetError) throw resetError;
+      setIsSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || 'Failed to send reset instructions. Please try again.');
+      console.error('Password reset failed:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -40,9 +60,14 @@ export default function ForgotPassword() {
           </div>
           <p className="text-center text-gray-600">
             Remember your password?{' '}
-            <a href="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+            <Button
+              type="button"
+              variant="link"
+              className="text-blue-600 hover:text-blue-700 font-medium p-0"
+              onClick={() => navigate('/login')}
+            >
               Back to login
-            </a>
+            </Button>
           </p>
         </Card>
       </div>
@@ -61,6 +86,13 @@ export default function ForgotPassword() {
           </p>
         </div>
 
+        {error && (
+          <Alert variant="destructive" className="flex gap-2 items-start">
+            <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <Label htmlFor="email">Email Address</Label>
@@ -78,16 +110,22 @@ export default function ForgotPassword() {
           <Button
             type="submit"
             className="w-full h-12 bg-gradient-to-r from-blue-600 to-teal-500 text-white hover:opacity-90 transition-opacity"
+            disabled={isSubmitting}
           >
-            Send Reset Instructions
+            {isSubmitting ? 'Sending...' : 'Send Reset Instructions'}
           </Button>
         </form>
 
         <p className="text-center text-gray-600">
           Remember your password?{' '}
-          <a href="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+          <Button
+            type="button"
+            variant="link"
+            className="text-blue-600 hover:text-blue-700 font-medium p-0"
+            onClick={() => navigate('/login')}
+          >
             Back to login
-          </a>
+          </Button>
         </p>
       </Card>
     </div>

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
+import logo from '/CLEANAGENT.AI LOGO.png';
 
 const navItems = [
   { name: 'How It Works', section: 'how-it-works' },
@@ -40,9 +41,19 @@ export default function Navigation() {
           <div className="flex-shrink-0 flex items-center">
             <button 
               onClick={() => scrollToSection('hero')}
-              className="text-xl sm:text-2xl font-bold text-blue-600 tracking-wider"
+              className="flex items-center space-x-3"
             >
-              CLEANAGENT
+              <img 
+                src={logo} 
+                alt="CleanAgent.AI Logo" 
+                className="h-10 w-auto object-contain -rotate-90 transform transition-transform hover:rotate-0 duration-300"
+              />
+              <span className="text-xl sm:text-2xl font-bold tracking-wider">
+                <span className="text-blue-600">C</span>
+                <span className="text-blue-600 lowercase">lean</span>
+                <span className="text-blue-600">A</span>
+                <span className="text-blue-600 lowercase">gent</span>
+              </span>
             </button>
           </div>
           
@@ -75,7 +86,7 @@ export default function Navigation() {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-blue-600 hover:bg-blue-50"
+              className={`hover:bg-blue-50 ${isOpen ? 'text-white' : 'text-blue-600'}`}
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

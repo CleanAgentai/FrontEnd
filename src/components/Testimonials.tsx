@@ -5,39 +5,31 @@ import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 
 interface Testimonial {
+  id: number;
   name: string;
   role: string;
   image: string;
   quote: string;
-  rating: number;
   highlight: string;
 }
 
-const testimonials: Testimonial[] = [
+const testimonials = [
   {
+    id: 1,
     name: "Sarah Johnson",
     role: "Owner, Pristine Cleaning Services",
     image: "/testimonials/sarah.jpg",
-    quote: "CleanAgent automated our hiring process, cutting our hiring time from 2 weeks to just 2 days. The AI handles everything from job posting to onboarding.",
-    rating: 5,
-    highlight: "95% faster hiring"
+    quote: "CleanAgent transformed our business. The AI-powered scheduling and client management tools helped us grow our customer base by 200% in just 6 months. The automated marketing features keep our pipeline full, and the operations dashboard gives us complete visibility into our business.",
+    highlight: "200% Growth in 6 Months"
   },
   {
+    id: 2,
     name: "Michael Chen",
-    role: "CEO, GreenClean Pro",
+    role: "CEO, SparkleRight Solutions",
     image: "/testimonials/michael.jpg",
-    quote: "We saved over 20 hours per week on scheduling alone. Our clients love the AI-powered communication, and our team is much more efficient now.",
-    rating: 5,
-    highlight: "20+ hours saved weekly"
-  },
-  {
-    name: "Lisa Rodriguez",
-    role: "Operations Manager, Sparkle Solutions",
-    image: "/testimonials/lisa.jpg",
-    quote: "Our lead conversion rates increased by 40% after implementing AI-driven follow-ups. The automated scheduling and quality control are game-changers.",
-    rating: 5,
-    highlight: "40% more conversions"
-  },
+    quote: "Since implementing CleanAgent, our team efficiency has increased dramatically. The automated scheduling and real-time tracking features have reduced our administrative work by 75%. We can now focus on delivering exceptional service to our clients.",
+    highlight: "75% Less Admin Work"
+  }
 ];
 
 export default function Testimonials() {
@@ -64,84 +56,51 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50">
-      {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-5" />
-        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-blue-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[40rem] h-[40rem] bg-teal-100/30 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600/10 to-teal-500/10 px-4 py-2 rounded-full mb-6">
-            <div className="bg-gradient-to-r from-blue-600 to-teal-500 p-1 rounded-full">
-              <MessageSquare className="h-4 w-4 text-white" />
-            </div>
-            <span className="font-medium bg-gradient-to-r from-blue-600 to-teal-500 bg-clip-text text-transparent">
-              Customer Success Stories
-            </span>
-          </div>
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-            Trusted by Leading Cleaning Companies
+    <div className="bg-white py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="mx-auto max-w-xl text-center mb-20">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Customer Success Stories
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            See how CleanAgent is helping cleaning businesses grow and succeed
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            See how businesses like yours are growing with CleanAgent
           </p>
         </div>
-
-        {/* Mobile Carousel */}
-        {isMobile ? (
-          <div className="relative px-4">
-            <div className="overflow-hidden">
-              <div 
-                className="flex transition-transform duration-500 ease-out"
-                style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-              >
-                {testimonials.map((testimonial, index) => (
-                  <TestimonialCard key={index} testimonial={testimonial} />
-                ))}
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-16 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+          {testimonials.map((testimonial) => (
+            <article key={testimonial.id} className="flex flex-col gap-8 rounded-2xl bg-white p-8 ring-1 ring-gray-200 hover:ring-blue-500 transition-all duration-300">
+              <div className="flex items-center gap-x-4 text-sm">
+                <img
+                  className="h-16 w-16 rounded-full bg-gray-50 object-cover"
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                />
+                <div>
+                  <h3 className="font-semibold tracking-tight text-gray-900">{testimonial.name}</h3>
+                  <p className="text-gray-600">{testimonial.role}</p>
+                </div>
               </div>
-            </div>
-
-            <div className="flex justify-center gap-4 mt-8">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={prevTestimonial}
-                className="rounded-full border-2 border-blue-600 hover:bg-blue-50"
-              >
-                <ChevronLeft className="h-5 w-5 text-blue-600" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={nextTestimonial}
-                className="rounded-full border-2 border-blue-600 hover:bg-blue-50"
-              >
-                <ChevronRight className="h-5 w-5 text-blue-600" />
-              </Button>
-            </div>
-          </div>
-        ) : (
-          /* Desktop Grid */
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={index} testimonial={testimonial} />
-            ))}
-          </div>
-        )}
-
-        <div className="mt-20 text-center">
+              <div>
+                <p className="text-gray-600 leading-7">{testimonial.quote}</p>
+                <div className="mt-6">
+                  <span className="text-sm font-medium text-gray-900">
+                    {testimonial.highlight}
+                  </span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="mt-24 text-center">
           <div className="max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8">
               Ready to transform your cleaning business?
             </h3>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-lg text-gray-600 mb-10">
               Join hundreds of cleaning companies saving 20+ hours per week with CleanAgent.
               Start your free trial today - only $299/month after trial period.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-6">
               <Button 
                 className="relative group bg-gradient-to-r from-blue-600 to-teal-500 text-white hover:opacity-90 transition-all duration-300 text-lg px-8 h-14 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                 onClick={() => navigate('/signup')}
@@ -165,13 +124,13 @@ export default function Testimonials() {
                 View Pricing
               </Button>
             </div>
-            <p className="mt-4 text-sm text-gray-500">
+            <p className="mt-6 text-sm text-gray-500">
               No credit card required • Cancel anytime
             </p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -206,16 +165,6 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
                 {testimonial.role}
               </p>
             </div>
-          </div>
-
-          {/* Rating */}
-          <div className="flex mb-4">
-            {[...Array(testimonial.rating)].map((_, i) => (
-              <Star
-                key={i}
-                className="h-5 w-5 text-yellow-400 fill-current"
-              />
-            ))}
           </div>
 
           {/* Highlight */}

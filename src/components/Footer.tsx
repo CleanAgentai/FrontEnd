@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
+import { emailService } from '@/services/emailService';
 
 const footerLinks = [
   {
@@ -15,28 +18,26 @@ const footerLinks = [
   {
     title: "Company",
     links: [
-      { label: "About Us", href: "/about" },
+      { label: "About Us", href: "/about-us" },
       { label: "Blog", href: "/blog" },
-      { label: "Careers", href: "/careers" },
       { label: "Contact", href: "/contact" },
     ]
   },
   {
-    title: "Resources",
+    title: "Legal",
     links: [
-      { label: "Help Center", href: "/help" },
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Cookie Policy", href: "/cookies" },
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Terms of Service", href: "/terms-of-service" },
+      { label: "Cookie Policy", href: "/cookie-policy" },
     ]
   }
 ];
 
 const socialLinks = [
   { 
-    icon: Facebook, 
-    href: "https://facebook.com/cleanagent",
-    label: "Follow us on Facebook"
+    icon: Linkedin, 
+    href: "https://linkedin.com/company/cleanagent",
+    label: "Connect with us on LinkedIn"
   },
   { 
     icon: Twitter, 
@@ -44,9 +45,9 @@ const socialLinks = [
     label: "Follow us on Twitter"
   },
   { 
-    icon: Linkedin, 
-    href: "https://linkedin.com/company/cleanagent",
-    label: "Connect with us on LinkedIn"
+    icon: Facebook, 
+    href: "https://facebook.com/cleanagent",
+    label: "Follow us on Facebook"
   },
   { 
     icon: Instagram, 
@@ -56,6 +57,36 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleNewsletterSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setIsSubmitting(true);
+    try {
+      await emailService.subscribeToNewsletter(email);
+      
+      toast({
+        title: "Success!",
+        description: "Thank you for subscribing to our newsletter!",
+        variant: "default",
+      });
+      
+      setEmail('');
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to subscribe. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <footer className="bg-gray-50 text-gray-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -72,19 +103,28 @@ export default function Footer() {
               <h3 className="text-lg font-semibold text-gray-900">
                 Get business tips & updates
               </h3>
-              <div className="flex gap-2">
-                <Input 
-                  type="email" 
-                  placeholder="Enter your email" 
-                  className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
-                />
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                  Subscribe
-                </Button>
-              </div>
-              <p className="text-sm text-gray-500">
-                Join our mailing list for exclusive content
-              </p>
+              <form onSubmit={handleNewsletterSignup} className="space-y-2">
+                <div className="flex gap-2">
+                  <Input 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+                    required
+                  />
+                  <Button 
+                    type="submit" 
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                  </Button>
+                </div>
+                <p className="text-sm text-gray-500">
+                  Join our mailing list for exclusive content
+                </p>
+              </form>
             </div>
           </div>
 
@@ -128,16 +168,20 @@ export default function Footer() {
 
         <div className="mt-8 pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex flex-wrap justify-center sm:justify-start gap-4">
-            <a href="/privacy" className="text-gray-500 hover:text-blue-600 transition-colors text-sm">
+            <a href="/privacy-policy" className="text-gray-500 hover:text-blue-600 transition-colors text-sm">
               Privacy Policy
             </a>
             <span className="text-gray-300">•</span>
-            <a href="/terms" className="text-gray-500 hover:text-blue-600 transition-colors text-sm">
+            <a href="/cookie-policy" className="text-gray-500 hover:text-blue-600 transition-colors text-sm">
+              Cookie Policy
+            </a>
+            <span className="text-gray-300">•</span>
+            <a href="/terms-of-service" className="text-gray-500 hover:text-blue-600 transition-colors text-sm">
               Terms of Service
             </a>
             <span className="text-gray-300">•</span>
-            <a href="/support" className="text-gray-500 hover:text-blue-600 transition-colors text-sm">
-              Support
+            <a href="mailto:support@cleanagent.ai" className="text-gray-500 hover:text-blue-600 transition-colors text-sm">
+              Contact Support
             </a>
           </div>
           <p className="text-gray-500 text-sm">
