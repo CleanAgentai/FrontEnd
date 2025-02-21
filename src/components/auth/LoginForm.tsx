@@ -160,7 +160,7 @@ export default function LoginForm() {
 
             <Button
               type="button"
-              onClick={handleFacebookLogin}
+              onClick={() => handleOAuthSignIn("facebook")}
               disabled={isLoading}
               className="h-10 bg-[#1877F2] hover:bg-[#1874EA] text-white"
             >
